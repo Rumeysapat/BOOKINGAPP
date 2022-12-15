@@ -17,6 +17,7 @@ const connect = async () => {
     throw error;
   }
 };
+
 mongoose.connection.on('disconnected', () => {
   console.log('MongoDB disconnected.');
 });
@@ -28,6 +29,19 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/rooms', roomsRoute);
 app.use('/api/hotels', hotelsRoute);
+
+app.use((error, req, res, next) => {
+  //if there is no status is gona be 500
+
+  const errorStatus = error.status || 500;
+  const errorMessage = error.message || 'something went wrong!';
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: error.stack,
+  });
+});
 
 app.listen(8800, () => {
   connect();

@@ -7,15 +7,7 @@ const router = express.Router();
 // router.get('/', (req, res,next) => {
 //   res.send('Hello, this is hotel endpoint');
 // });
-router.get('/', async (req, res) => {
-  try {
-    const hotels = await Hotel.find();
 
-    res.status(200).json(hotels);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
 router.post('/', async (req, res) => {
   const newHotel = new Hotel(req.body);
 
@@ -51,13 +43,24 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
-  try {
-    const hotel = await Hotel.findById(req.params.id);
+// router.get('/:id', async (req, res) => {
 
-    res.status(200).json(hotel);
+//   try {
+//     const hotel = await Hotel.findById(req.params.id);
+
+//     res.status(200).json(hotel);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+router.get('/', async (req, res, next) => {
+  try {
+    const hotels = await Hotel.find();
+
+    res.status(200).json(hotels);
   } catch (error) {
-    res.status(500).json(error);
+    next(error);
   }
 });
 
