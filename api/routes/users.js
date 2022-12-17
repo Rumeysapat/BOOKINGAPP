@@ -5,13 +5,26 @@ import {
   getUser,
   getAllUser,
 } from '../controllers/user.js';
+import { verfiyToken, verifyAdmin, verifyUser } from '../utils/verifyToken.js';
 const router = express.Router();
 
-router.put('/:id', updateUser);
+// router.get('/checkauthentication', verfiyToken, (req, res, next) => {
+//   res.send('hello user , you are authenticated!');
+// });
 
-router.delete('/:id', deleteUser);
+// router.get('/checkuser/:id', verifyUser, (req, res, next) => {
+//   res.send('hello user ,you are logged and you can delete your account');
+// });
+// router.get('/checkadmin/:id', verifyAdmin, (req, res, next) => {
+//   res.send('hello admin ,you are logged and you can delete all accounts');
+// });
 
-router.get('/:id', getUser);
-router.get('/', getAllUser);
+router.put('/:id',verifyUser,updateUser);
+
+router.delete('/:id',verifyUser ,deleteUser);
+
+router.get('/:id',verifyUser,getUser);
+router.get('/',verifyAdmin,getAllUser);
 
 export default router;
+ 
