@@ -4,7 +4,7 @@ import {
   getAllHotel,
   updateHotel,
   deleteHotel,
-  getHotel,
+  getHotel,countByCity
 } from '../controllers/hotel.js';
 import { verifyAdmin } from '../utils/verifyToken.js';
 import Hotel from '../models/Hotel.js';
@@ -16,8 +16,11 @@ router.post('/',verifyAdmin,createHotel);
 router.put('/:id',verifyAdmin,updateHotel);
 
 router.delete('/:id',verifyAdmin, deleteHotel);
+router.get("/", getAllHotel);
 
-router.get('/:id', getHotel);
-router.get('/', getAllHotel);
+router.get('/find/:id', getHotel);
+router.get('/countByCity', countByCity);
+router.get('/countByType', getAllHotel);
+
 
 export default router;
